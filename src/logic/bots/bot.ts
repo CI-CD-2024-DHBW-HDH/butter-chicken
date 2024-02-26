@@ -1,32 +1,30 @@
-import { Field, getBlanks, isPlayer, Mode, won } from "../game";
-import { easyMove } from "./easy";
-import { hardMove } from "./hard";
-import { mediumMove, pettyMove } from "./medium";
+import { type Field, getBlanks, isPlayer, Mode, won } from '../game'
+import { easyMove } from './easy'
+import { hardMove } from './hard'
+import { mediumMove, pettyMove } from './medium'
 
-export interface BotMove {
-  (board: Field[], own: Field): number;
-}
+export type BotMove = (board: Field[], own: Field) => number
 
-export function moveWithMode(mode: Mode): BotMove | undefined {
+export function moveWithMode (mode: Mode): BotMove | undefined {
   switch (mode) {
     case Mode.EASY:
-      return easyMove;
+      return easyMove
     case Mode.PETTY:
-      return pettyMove;
+      return pettyMove
     case Mode.MEDIUM:
-      return mediumMove;
+      return mediumMove
     case Mode.HARD:
-      return hardMove;
+      return hardMove
     case Mode.HUMAN || Mode.ONLINE:
-      return undefined;
+      return undefined
     default:
-      return undefined;
+      return undefined
   }
 }
 
 // winningMove returns a move player can play to win
 // if there is no winning move, it returns -1
-export function winningMove(board: Field[], player: Field): number {
+export function winningMove (board: Field[], player: Field): number {
   const winCombinations: number[][] = [
     [0, 1, 2], // Top row
     [3, 4, 5], // Middle row
@@ -35,19 +33,19 @@ export function winningMove(board: Field[], player: Field): number {
     [1, 4, 7], // Middle column
     [2, 5, 8], // Right column
     [0, 4, 8], // Diagonal from top-left to bottom-right
-    [2, 4, 6], // Diagonal from top-right to bottom-left
-  ];
+    [2, 4, 6] // Diagonal from top-right to bottom-left
+  ]
 
-  for (let [a, b, c] of winCombinations) {
+  for (const [a, b, c] of winCombinations) {
     // Check if two cells are filled by the player and the third is empty
-    if (board[a] === player && board[b] === player && board[c] === 0) return c;
-    if (board[a] === player && board[c] === player && board[b] === 0) return b;
-    if (board[b] === player && board[c] === player && board[a] === 0) return a;
+    if (board[a] === player && board[b] === player && board[c] === 0) return c
+    if (board[a] === player && board[c] === player && board[b] === 0) return b
+    if (board[b] === player && board[c] === player && board[a] === 0) return a
   }
 
-  return -1;
+  return -1
 }
 
-export function randomMove(bounds: number): number {
-  return Math.floor(Math.random() * bounds);
+export function randomMove (bounds: number): number {
+  return Math.floor(Math.random() * bounds)
 }

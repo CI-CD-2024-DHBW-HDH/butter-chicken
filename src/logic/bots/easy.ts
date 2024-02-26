@@ -1,15 +1,15 @@
-import { Field, getBlanks } from "../game";
-import { randomMove, winningMove } from "./bot";
+import { type Field, getBlanks } from '../game'
+import { randomMove, winningMove } from './bot'
 
 // the easy bot plays a winning move, if it can
 // otherwise, it plays a random move
-export function easyMove(board: Field[], own: Field): number {
-  var winningPos = winningMove(board, own);
+export function easyMove (board: Field[], own: Field): number {
+  const winningPos = winningMove(board, own)
   if (winningPos !== -1) {
-    return winningPos;
+    return winningPos
   } else {
-    var blanks = getBlanks(board);
-    var randomPos = randomMove(blanks.length);
-    return blanks[randomPos];
+    const blanks = getBlanks(board)
+    const randomPos = randomMove(blanks.length)
+    return blanks[randomPos]
   }
 }
