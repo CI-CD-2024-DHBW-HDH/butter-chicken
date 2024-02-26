@@ -6,10 +6,8 @@
     "extends": "standard-with-typescript",
     "parserOptions": {
         "ecmaVersion": "latest",
-        "sourceType": "module",
-        "extraFileExtensions": false
+        "sourceType": "module"
     },
     "rules": {
-
     }
 }
