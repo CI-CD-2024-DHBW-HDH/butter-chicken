@@ -9,7 +9,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Install Dependencies
         run: npm i
-      - name: Selte check
+      - name: Svelte check
         run: npm run check
       - name: format check
         run: npm run format:check
