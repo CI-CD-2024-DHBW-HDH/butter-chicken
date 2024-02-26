@@ -102,7 +102,30 @@ export function isFull(board: Field[]): boolean {
 }
 
 export function won(board: Field[]): Field {
-  return Field.EMPTY
+  // Überprüfe horizontale Linien
+  for (let i = 0; i < 9; i += 3) {
+    if (board[i] !== Field.EMPTY && board[i] === board[i + 1] && board[i] === board[i + 2]) {
+      return board[i];
+    }
+  }
+
+  // Überprüfe vertikale Linien
+  for (let i = 0; i < 3; i++) {
+    if (board[i] !== Field.EMPTY && board[i] === board[i + 3] && board[i] === board[i + 6]) {
+      return board[i];
+    }
+  }
+
+  // Überprüfe diagonale Linien
+  if (board[0] !== Field.EMPTY && board[0] === board[4] && board[0] === board[8]) {
+    return board[0];
+  }
+  if (board[2] !== Field.EMPTY && board[2] === board[4] && board[2] === board[6]) {
+    return board[2];
+  }
+
+  // Wenn kein Spieler gewonnen hat
+  return Field.EMPTY;
 }
 
 export function newBoard(): Field[] {
