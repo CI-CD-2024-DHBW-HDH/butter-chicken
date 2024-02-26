@@ -27,6 +27,24 @@ export function moveWithMode(mode: Mode): BotMove | undefined {
 // winningMove returns a move player can play to win
 // if there is no winning move, it returns -1
 export function winningMove(board: Field[], player: Field): number {
+  const winCombinations: number[][] = [
+    [0, 1, 2], // Top row
+    [3, 4, 5], // Middle row
+    [6, 7, 8], // Bottom row
+    [0, 3, 6], // Left column
+    [1, 4, 7], // Middle column
+    [2, 5, 8], // Right column
+    [0, 4, 8], // Diagonal from top-left to bottom-right
+    [2, 4, 6]  // Diagonal from top-right to bottom-left
+  ];
+
+  for (let [a, b, c] of winCombinations) {
+    // Check if two cells are filled by the player and the third is empty
+    if (board[a] === player && board[b] === player && board[c] === 0) return c;
+    if (board[a] === player && board[c] === player && board[b] === 0) return b;
+    if (board[b] === player && board[c] === player && board[a] === 0) return a;
+  }
+
   return -1
 }
 
