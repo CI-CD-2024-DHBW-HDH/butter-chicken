@@ -1,7 +1,110 @@
-// import { won } from '../../logic/game'
+import { won, Field } from "../../logic/game";
 
-test("adds 1 + 2 to equal 3", () => {
-  expect(true).toBe(true);
+test("first row player 1, player 1 win", () => {
+  var board: Field[] = [Field.PLAYER1, Field.PLAYER1, Field.PLAYER1];
+  expect(won(board)).toBe(Field.PLAYER1);
+});
+
+test("second row player 1, player 1 win", () => {
+  var board: Field[] = [
+    Field.EMPTY,
+    Field.EMPTY,
+    Field.EMPTY,
+    Field.PLAYER1,
+    Field.PLAYER1,
+    Field.PLAYER1,
+  ];
+  expect(won(board)).toBe(Field.PLAYER1);
+});
+
+test("third row player 1, player 1 win", () => {
+  var board: Field[] = [
+    Field.EMPTY,
+    Field.EMPTY,
+    Field.EMPTY,
+    Field.EMPTY,
+    Field.EMPTY,
+    Field.EMPTY,
+    Field.PLAYER1,
+    Field.PLAYER1,
+    Field.PLAYER1,
+  ];
+  expect(won(board)).toBe(Field.PLAYER1);
+});
+
+test("first column player 1, player 1 win", () => {
+  var board: Field[] = [
+    Field.PLAYER1,
+    Field.EMPTY,
+    Field.EMPTY,
+    Field.PLAYER1,
+    Field.EMPTY,
+    Field.EMPTY,
+    Field.PLAYER1,
+    Field.EMPTY,
+    Field.EMPTY,
+  ];
+  expect(won(board)).toBe(Field.PLAYER1);
+});
+
+test("second column player 1, player 1 win", () => {
+  var board: Field[] = [
+    Field.EMPTY,
+    Field.PLAYER1,
+    Field.EMPTY,
+    Field.EMPTY,
+    Field.PLAYER1,
+    Field.EMPTY,
+    Field.EMPTY,
+    Field.PLAYER1,
+    Field.EMPTY,
+  ];
+  expect(won(board)).toBe(Field.PLAYER1);
+});
+
+test("third column player 1, player 1 win", () => {
+  var board: Field[] = [
+    Field.EMPTY,
+    Field.EMPTY,
+    Field.PLAYER1,
+    Field.EMPTY,
+    Field.EMPTY,
+    Field.PLAYER1,
+    Field.EMPTY,
+    Field.EMPTY,
+    Field.PLAYER1,
+  ];
+  expect(won(board)).toBe(Field.PLAYER1);
+});
+
+test("diagonal right player 1, player 1 win", () => {
+  var board: Field[] = [
+    Field.EMPTY,
+    Field.EMPTY,
+    Field.PLAYER1,
+    Field.EMPTY,
+    Field.PLAYER1,
+    Field.EMPTY,
+    Field.PLAYER1,
+    Field.EMPTY,
+    Field.EMPTY,
+  ];
+  expect(won(board)).toBe(Field.PLAYER1);
+});
+
+test("diagonal left player 1, player 1 win", () => {
+  var board: Field[] = [
+    Field.PLAYER1,
+    Field.EMPTY,
+    Field.EMPTY,
+    Field.EMPTY,
+    Field.PLAYER1,
+    Field.EMPTY,
+    Field.EMPTY,
+    Field.EMPTY,
+    Field.PLAYER1,
+  ];
+  expect(won(board)).toBe(Field.PLAYER1);
 });
 
 export {};
