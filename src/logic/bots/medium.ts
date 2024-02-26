@@ -6,6 +6,8 @@ import { randomMove, winningMove } from "./bot";
 // or plays the center field if it can
 // otherwise it plays a random move
 export function mediumMove(board: Field[], own: Field): number {
+  sleep(1000);
+
   var nextSelfWinningMove : number = winningMove(board,own);
   if(nextSelfWinningMove !== -1){
     
@@ -29,6 +31,7 @@ export function mediumMove(board: Field[], own: Field): number {
 // this bot just tries to block a win
 // otherwise it plays a random move
 export function pettyMove(board: Field[], own: Field): number {
+  sleep(1000);
   const otherPlayer = (own === Field.PLAYER1) ? Field.PLAYER2 : Field.PLAYER1;
   const opponentWinMove = winningMove(board, otherPlayer);
 

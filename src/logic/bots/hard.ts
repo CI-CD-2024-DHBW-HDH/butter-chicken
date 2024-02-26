@@ -1,6 +1,8 @@
 import { Field, getBlanks, invertPlayer, won } from "../game";
 
 export function hardMove(board: Field[], own: Field): number {
+  sleep(1000);
+
   const blanks = getBlanks(board);
 
   const moves: Map<number, number> = new Map();
