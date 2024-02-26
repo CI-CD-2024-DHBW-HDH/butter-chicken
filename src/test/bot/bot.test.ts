@@ -20,5 +20,4 @@ test("test WinningMove", () => {
   }
 });
 
-export {}
 export {};

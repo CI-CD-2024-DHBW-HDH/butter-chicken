@@ -11,6 +11,8 @@ jobs:
         run: npm i
       - name: Svelte check
         run: npm run check
+      - name: format
+        run: npm run format
       - name: format check
         run: npm run format:check
       - name: eslint check
