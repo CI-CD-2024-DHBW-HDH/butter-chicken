@@ -36,12 +36,9 @@ export function pettyMove(board: Field[], own: Field): number {
   const opponentWinMove = winningMove(board, otherPlayer);
 
   if (opponentWinMove !== -1) {
-    board[opponentWinMove] = own;
     return opponentWinMove;
   } else {
     let blankFields = getBlanks(board);
-    let rndMove = randomMove(blankFields.length);
-    board[rndMove] = own;
-    return rndMove;
+    return blankFields[randomMove(blankFields.length)];
   }
 }
