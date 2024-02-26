@@ -1,4 +1,4 @@
-import { type Field, getBlanks, isPlayer, Mode, won } from '../game'
+import { Field, Mode } from '../game'
 import { easyMove } from './easy'
 import { hardMove } from './hard'
 import { mediumMove, pettyMove } from './medium'
@@ -38,9 +38,9 @@ export function winningMove (board: Field[], player: Field): number {
 
   for (const [a, b, c] of winCombinations) {
     // Check if two cells are filled by the player and the third is empty
-    if (board[a] === player && board[b] === player && board[c] === 0) return c
-    if (board[a] === player && board[c] === player && board[b] === 0) return b
-    if (board[b] === player && board[c] === player && board[a] === 0) return a
+    if (board[a] === player && board[b] === player && board[c] === Field.EMPTY) return c
+    if (board[a] === player && board[c] === player && board[b] === Field.EMPTY) return b
+    if (board[b] === player && board[c] === player && board[a] === Field.EMPTY) return a
   }
 
   return -1

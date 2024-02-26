@@ -1,4 +1,4 @@
-import { getBlanks, invertPlayer, Field } from '../game'
+import { getBlanks, Field } from '../game'
 import { randomMove, winningMove } from './bot'
 
 // the medium bot plays a wining move, if it can
