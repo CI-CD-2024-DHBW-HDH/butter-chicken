@@ -35,7 +35,7 @@ export function winningMove(board: Field[], player: Field): number {
     [1, 4, 7], // Middle column
     [2, 5, 8], // Right column
     [0, 4, 8], // Diagonal from top-left to bottom-right
-    [2, 4, 6]  // Diagonal from top-right to bottom-left
+    [2, 4, 6], // Diagonal from top-right to bottom-left
   ];
 
   for (let [a, b, c] of winCombinations) {
@@ -45,7 +45,7 @@ export function winningMove(board: Field[], player: Field): number {
     if (board[b] === player && board[c] === player && board[a] === 0) return a;
   }
 
-  return -1
+  return -1;
 }
 
 export function randomMove(bounds: number): number {
