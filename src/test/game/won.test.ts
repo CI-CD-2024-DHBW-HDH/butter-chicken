@@ -1,12 +1,12 @@
 import { won, Field } from "../../logic/game";
 
 test("first row player 1, player 1 win", () => {
-  var board: Field[] = [Field.PLAYER1, Field.PLAYER1, Field.PLAYER1];
+  let board: Field[] = [Field.PLAYER1, Field.PLAYER1, Field.PLAYER1];
   expect(won(board)).toBe(Field.PLAYER1);
 });
 
 test("second row player 1, player 1 win", () => {
-  var board: Field[] = [
+  let board: Field[] = [
     Field.EMPTY,
     Field.EMPTY,
     Field.EMPTY,
@@ -18,7 +18,7 @@ test("second row player 1, player 1 win", () => {
 });
 
 test("third row player 1, player 1 win", () => {
-  var board: Field[] = [
+  let board: Field[] = [
     Field.EMPTY,
     Field.EMPTY,
     Field.EMPTY,
@@ -33,7 +33,7 @@ test("third row player 1, player 1 win", () => {
 });
 
 test("first column player 1, player 1 win", () => {
-  var board: Field[] = [
+  let board: Field[] = [
     Field.PLAYER1,
     Field.EMPTY,
     Field.EMPTY,
@@ -48,7 +48,7 @@ test("first column player 1, player 1 win", () => {
 });
 
 test("second column player 1, player 1 win", () => {
-  var board: Field[] = [
+  let board: Field[] = [
     Field.EMPTY,
     Field.PLAYER1,
     Field.EMPTY,
@@ -63,7 +63,7 @@ test("second column player 1, player 1 win", () => {
 });
 
 test("third column player 1, player 1 win", () => {
-  var board: Field[] = [
+  let board: Field[] = [
     Field.EMPTY,
     Field.EMPTY,
     Field.PLAYER1,
@@ -78,7 +78,7 @@ test("third column player 1, player 1 win", () => {
 });
 
 test("diagonal right player 1, player 1 win", () => {
-  var board: Field[] = [
+  let board: Field[] = [
     Field.EMPTY,
     Field.EMPTY,
     Field.PLAYER1,
@@ -93,7 +93,7 @@ test("diagonal right player 1, player 1 win", () => {
 });
 
 test("diagonal left player 1, player 1 win", () => {
-  var board: Field[] = [
+  let board: Field[] = [
     Field.PLAYER1,
     Field.EMPTY,
     Field.EMPTY,
