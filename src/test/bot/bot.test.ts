@@ -20,12 +20,5 @@ test("test WinningMove", () => {
   }
 });
 
-    for(const item of winCombinations){
-        let tori = newBoard()
-        tori = item
-        expect(winningMove(tori,Field.PLAYER1)).not.toBe(-1)
-    }
-})
-
 export {}
 export {};
