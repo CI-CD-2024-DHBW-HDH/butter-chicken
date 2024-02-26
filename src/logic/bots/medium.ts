@@ -29,5 +29,16 @@ export function mediumMove(board: Field[], own: Field): number {
 // this bot just tries to block a win
 // otherwise it plays a random move
 export function pettyMove(board: Field[], own: Field): number {
-  return -1
+  const otherPlayer = (own === Field.PLAYER1) ? Field.PLAYER2 : Field.PLAYER1;
+  const opponentWinMove = winningMove(board, otherPlayer);
+
+  if (opponentWinMove !== -1) {
+    board[opponentWinMove] = own;
+    return opponentWinMove;
+  } else {
+    let blankFields = getBlanks(board);
+    let rndMove = randomMove(blankFields.length);
+    board[rndMove] = own;
+    return rndMove;
+  }
 }
