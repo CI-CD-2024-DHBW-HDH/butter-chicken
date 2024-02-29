@@ -22,7 +22,7 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: ghcr.io/ci-cd-2024-dhbw-hdh/butter-chicken:latest
+          tags: "ghcr.io/ci-cd-2024-dhbw-hdh/butter-chicken:latest"
 
 
 
