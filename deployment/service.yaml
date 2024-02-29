@@ -1,0 +1,35 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2024-02-29T13:01:32Z"
+  labels:
+    app: my-svc
+  name: my-svc
+  namespace: default
+  resourceVersion: "7509"
+  uid: 8146a7a2-99de-4893-be1d-0fa51142367b
+spec:
+  clusterIP: 10.96.35.55
+  clusterIPs:
+  - 10.96.35.55
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: 8080-80
+    nodePort: 32189
+    port: 8080
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: my-deployment
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
