@@ -22,7 +22,9 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: tictactoe-image:latest/ghcr.io/derkirgise
+          tags: ghcr.io/ci-cd-2024-dhbw-hdh/butter-chicken:latest
+
+
 
 #  build-and-deploy:
  #   runs-on: ubuntu-latest
