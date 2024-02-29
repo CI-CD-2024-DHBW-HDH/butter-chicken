@@ -1,4 +1,4 @@
-name: butter-chicken pipeline
+name: Basic pipeline
 run-name: ${{ github.actor }} is pushing on main-branch
 on: [push]
 jobs:
