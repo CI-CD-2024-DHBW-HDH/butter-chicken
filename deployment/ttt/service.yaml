@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2024-02-29T14:13:39Z"
+  labels:
+    app: ttt-svc
+  name: ttt-svc
+  namespace: default
+  resourceVersion: "12920"
+  uid: bdcaf8ac-26a6-432a-aaa6-f21c06c1217f
+spec:
+  clusterIP: 10.101.218.202
+  clusterIPs:
+  - 10.101.218.202
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: 8080-80
+    nodePort: 30544
+    port: 8080
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: ttt-deployment
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}

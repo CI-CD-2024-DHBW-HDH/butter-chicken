@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "3"
+  creationTimestamp: "2024-02-29T13:55:13Z"
+  generation: 4
+  labels:
+    app: ttt-deployment
+  name: ttt-deployment
+  namespace: default
+  resourceVersion: "12808"
+  uid: 13c3618b-343c-4bc4-b82e-dab8bce13dc1
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 3
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: ttt-deployment
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ttt-deployment
+    spec:
+      containers:
+      - image: ghcr.io/ci-cd-2024-dhbw-hdh/butter-chicken:latest
+        imagePullPolicy: Always
+        name: butter-chicken
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: regcred
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 3
+  conditions:
+  - lastTransitionTime: "2024-02-29T14:07:26Z"
+    lastUpdateTime: "2024-02-29T14:07:26Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2024-02-29T13:55:13Z"
+    lastUpdateTime: "2024-02-29T14:13:04Z"
+    message: ReplicaSet "ttt-deployment-575798f4f9" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 4
+  readyReplicas: 3
+  replicas: 3
+  updatedReplicas: 3
