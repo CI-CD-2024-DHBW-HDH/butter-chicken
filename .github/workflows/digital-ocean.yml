@@ -23,7 +23,10 @@ jobs:
         method: kubeconfig
         kubeconfig: ${{ secrets.KUBE_CONFIG }}
 
+    - name: Create namespace
+      run: kubectl create namespace butter-chicken --dry-run=client -o yaml | kubectl apply -f -
+
     - name: Deploy to Kubernetes
       run: |
-        kubectl apply -f /deployment/deployment.yaml
-        kubectl apply -f /deployment/service.yaml
+        kubectl apply -f deployment/deployment.yaml
+        kubectl apply -f deployment/service.yaml
