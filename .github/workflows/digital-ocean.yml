@@ -36,7 +36,7 @@ jobs:
       with:
          namespace: 'butter-chicken'
          secret-name: 'regcred'
-         container-registry-url: 'ghcr.io'
+         container-registry-url: 'ghcr'
          container-registry-username: ${{ github.actor }}
          container-registry-password: ${{ secrets.GITHUB_TOKEN }}
       id: create-secret
