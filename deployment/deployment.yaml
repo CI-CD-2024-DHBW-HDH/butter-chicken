@@ -33,7 +33,7 @@ spec:
       containers:
       - image: ghcr.io/ci-cd-2024-dhbw-hdh/butter-chicken:latest
         imagePullPolicy: Always
-        name: tictactoe
+        name: butter-chicken
         ports:
         - containerPort: 80
           protocol: TCP
