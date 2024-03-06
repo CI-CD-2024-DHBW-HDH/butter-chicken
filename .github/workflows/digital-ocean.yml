@@ -34,9 +34,9 @@ jobs:
     - name: Set imagePullSecret
       uses: azure/k8s-create-secret@v4
       with:
-        namespace: 'butter-chicken'
-        secret-name: 'regcred'
-        container-registry-url: 'ghcr.io'
-        container-registry-username: ${{secrets.REGISTRY_USERNAME}}
-        container-registry-password: ${{secrets.REGISTRY_PASSWORD}}
+         namespace: 'butter-chicken'
+         secret-name: 'regcred'
+         container-registry-url: 'containerregistry.contoso.com'
+         container-registry-username: ${{ github.actor }}
+         container-registry-password: ${{ secrets.GITHUB_TOKEN }}
       id: create-secret
