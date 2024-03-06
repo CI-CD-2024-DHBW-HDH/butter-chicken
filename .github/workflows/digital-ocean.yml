@@ -1,15 +1,29 @@
-name: Get pods
-on: [push]
+name: Deploy to DigitalOcean Kubernetes
+
+on:
+  push:
+    branches:
+      - main # Set this to your default branch
 
 jobs:
   deploy:
-    name: Deploy
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions-hub/kubectl@master
-        env:
-          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-        with:
-          args: get pods
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Kubectl
+      uses: azure/setup-kubectl@v1
+      with:
+        version: 'v1.20.0' # Set this to the version of kubectl you want to use
+
+    - name: Configure Kubernetes Cluster
+      uses: azure/k8s-set-context@v1
+      with:
+        method: kubeconfig
+        kubeconfig: ${{ secrets.KUBE_CONFIG }}
+
+    - name: Deploy to Kubernetes
+      run: |
+        kubectl apply -f deployment/deployment.yaml
+        kubectl apply -f deployment/service.yaml
