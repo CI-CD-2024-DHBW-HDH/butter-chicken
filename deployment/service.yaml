@@ -9,7 +9,7 @@ metadata:
   labels:
     app: my-svc
   name: my-svc
-  namespace: default
+  namespace: butter-chicken
   resourceVersion: "7509"
   uid: 8146a7a2-99de-4893-be1d-0fa51142367b
 spec:

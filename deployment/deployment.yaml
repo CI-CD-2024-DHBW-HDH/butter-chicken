@@ -12,7 +12,7 @@ metadata:
   labels:
     app: my-deployment
   name: my-deployment
-  namespace: default
+  namespace: butter-chicken
   resourceVersion: "13775"
   uid: e1d4259f-8e68-4f0b-ae59-e2a2e2de2f09
 spec:
