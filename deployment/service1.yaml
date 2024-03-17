@@ -1,0 +1,29 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: tic-tac-toe-svc # Wichtig!
+  name: tic-tac-toe-svc # Wichtig!
+  # namespace: butter-chicken # Wird in Pipeline gesetzt
+spec:
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: 8080-80
+    nodePort: 32189 # externer Port um auf Service zuzugreifen. Statischer Port (muss zwischen 30000-32767), aber bei weggelassen ist er dynamisch. Bei Anfrage auf Nodes über diesen Port, wird man an Service weitergleitet, vom Service, wird man dann weitergelitet an passende Nodes/Pods (target Port)
+    port: 8080 # interner Port für Cluster um auf Service zuzugreifen
+    protocol: TCP
+    targetPort: 80 # Ist Port, welcher in Deployment auch als Container Port angegeben ist
+  selector:
+    app: tic-tac-toe # Wichtig!
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
