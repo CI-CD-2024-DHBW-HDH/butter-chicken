@@ -1,0 +1,65 @@
+# Wichtig: Namespace muss schon vorher in K8 angelegt werden!
+
+name: deploy to digitalocean kubernetes (Samuel Kraut)
+
+on:
+  push:
+    branches:
+      - main # Set this to your default branch
+
+env:
+  CONTAINER_REGISTRY: ghcr.io
+  IMAGE_TAG: ghcr.io/ci-cd-2024-dhbw-hdh/butter-chicken:latest
+  K8_NAMESPACE: butter-chicken
+  K8_SECRET_NAME: regcred
+
+jobs:
+   build:
+      runs-on: ubuntu-latest
+      steps:
+         - name: Checkout code
+           uses: actions/checkout@v3
+
+         - name: login to container registry
+           uses: docker/login-action@v3
+           with:
+             registry: $CONTAINER_REGISTRY
+             username: ${{ github.actor }} # automatisch
+             password: ${{ secrets.GITHUB_TOKEN }} # automatisch
+
+         - name: build and push image
+           uses: docker/build-push-action@v5
+           with:
+             context: .
+             file: Dockerfile
+             push: true
+             tags: $IMAGE_TAG
+
+         - uses: azure/setup-kubectl@v2.0
+
+         - uses: Azure/k8s-set-context@v2
+           with:
+              kubeconfig: ${{ secrets.KUBE_CONFIG }} # anlegen https://github.com/CI-CD-2024-DHBW-HDH/butter-chicken/settings/secrets/actions/new
+              # Kubeconfig einfach ins Value einfügen
+
+         - name: create image registry secret for kubernetes
+           uses: Azure/k8s-create-secret@v1.1
+           with:
+              container-registry-url: $CONTAINER_REGISTRY
+              container-registry-username: ${{ github.actor }}
+              container-registry-password: ${{ secrets.PULL_TOKEN }} # Muss selbst angelet werden https://github.com/settings/tokens/new (read:packages = true)
+              secret-name: $K8_SECRET_NAME
+
+         - name: deploy deployment and service
+           uses: Azure/k8s-deploy@v4
+           with:
+              namespace: $K8_NAMESPACE
+              # action: deploy # Vllt muss action auskommentiert werden
+              # strategy: basic # Vllt strategy auskommentieren, aber nur wenn auch action auskommentiert  https://github.com/Azure/k8s-deploy
+              manifests: |
+                 deployment/deployment.yaml
+                 deployment/service.yaml
+              images: |
+                 $IMAGE_TAG
+              imagepullsecrets: |
+                 $K8_SECRET_NAME
