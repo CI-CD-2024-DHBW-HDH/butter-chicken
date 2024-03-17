@@ -17,7 +17,7 @@ spec:
   ipFamilyPolicy: SingleStack
   ports:
   - name: 8080-80
-    nodePort: 32189
+    nodePort: 32189 # statische Port (wird auf allen Nodes für dieses Deployment geöffnet (muss zwischen 30000-32767))
     port: 8080
     protocol: TCP
     targetPort: 80
