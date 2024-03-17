@@ -1,4 +1,6 @@
 # Wichtig: Namespace muss schon vorher in K8 angelegt werden!
+# Anleitung: https://nicwortel.nl/blog/2022/continuous-deployment-to-kubernetes-with-github-actions
+
 
 name: deploy to digitalocean kubernetes (Samuel Kraut)
 
@@ -9,32 +11,45 @@ on:
 
 env:
   CONTAINER_REGISTRY: ghcr.io
-  IMAGE_TAG: ghcr.io/ci-cd-2024-dhbw-hdh/butter-chicken:latest
+  IMAGE_TAG: ghcr.io/ci-cd-2024-dhbw-hdh/butter-chicken
   K8_NAMESPACE: butter-chicken
   K8_SECRET_NAME: regcred
 
+
+
 jobs:
-   build:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: login to container registry
+        uses: docker/login-action@v3
+        with:
+          registry: $CONTAINER_REGISTRY
+          username: ${{ github.actor }} # automatisch
+          password: ${{ secrets.GITHUB_TOKEN }} # automatisch
+
+      - name: build and push image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: |
+            $IMAGE_TAG:latest
+            $IMAGE_TAG:${{ github.sha }} # sha ist git commit hash
+  
+  
+  deploy:
       runs-on: ubuntu-latest
+      permissions: # Info Github Token Premissions: https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs
+        id-token: write
+        contents: read
+        actions: read
+        packages: read
       steps:
-         - name: Checkout code
-           uses: actions/checkout@v3
-
-         - name: login to container registry
-           uses: docker/login-action@v3
-           with:
-             registry: $CONTAINER_REGISTRY
-             username: ${{ github.actor }} # automatisch
-             password: ${{ secrets.GITHUB_TOKEN }} # automatisch
-
-         - name: build and push image
-           uses: docker/build-push-action@v5
-           with:
-             context: .
-             file: Dockerfile
-             push: true
-             tags: $IMAGE_TAG
-
          - uses: azure/setup-kubectl@v2.0
 
          - uses: Azure/k8s-set-context@v2
@@ -45,21 +60,20 @@ jobs:
          - name: create image registry secret for kubernetes
            uses: Azure/k8s-create-secret@v1.1
            with:
+              namespace: $K8_NAMESPACE
               container-registry-url: $CONTAINER_REGISTRY
               container-registry-username: ${{ github.actor }}
-              container-registry-password: ${{ secrets.PULL_TOKEN }} # Muss selbst angelet werden https://github.com/settings/tokens/new (read:packages = true)
+              container-registry-password: ${{ secrets.GITHUB_TOKEN }} #automatisch (durch Premission im job möglich) # Mit ${{ secrets.PULL_TOKEN }} muss selbst angelet werden https://github.com/settings/tokens/new (read:packages = true)
               secret-name: $K8_SECRET_NAME
 
          - name: deploy deployment and service
            uses: Azure/k8s-deploy@v4
            with:
               namespace: $K8_NAMESPACE
-              # action: deploy # Vllt muss action auskommentiert werden
-              # strategy: basic # Vllt strategy auskommentieren, aber nur wenn auch action auskommentiert  https://github.com/Azure/k8s-deploy
               manifests: |
                  deployment/deployment.yaml
                  deployment/service.yaml
               images: |
-                 $IMAGE_TAG
+                $IMAGE_TAG:${{ github.sha }} # sha ist git commit hash
               imagepullsecrets: |
                  $K8_SECRET_NAME
