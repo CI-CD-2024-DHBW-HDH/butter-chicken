@@ -74,6 +74,6 @@ jobs:
                  deployment/deployment.yaml
                  deployment/service.yaml
               images: |
-                $IMAGE_TAG:${{ github.sha }} # sha ist git commit hash
+                $IMAGE_TAG:${{ github.sha }} # sha ist git commit hash. Das Tag von Image wird hiermit im deployment überschrieben. Sichert das immer das aktuelle Image aus der Pipeline verwendet wird
               imagepullsecrets: |
                  $K8_SECRET_NAME
