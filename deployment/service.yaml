@@ -6,9 +6,9 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: my-svc
-  name: my-svc
-  namespace: butter-chicken
+    app: my-svc # Wichtig!
+  name: my-svc # Wichtig!
+  # namespace: butter-chicken # Wird in Pipeline gesetzt
 spec:
   externalTrafficPolicy: Cluster
   internalTrafficPolicy: Cluster
@@ -17,12 +17,12 @@ spec:
   ipFamilyPolicy: SingleStack
   ports:
   - name: 8080-80
-    nodePort: 32189 # statische Port (wird auf allen Nodes für dieses Deployment geöffnet (muss zwischen 30000-32767))
-    port: 8080
+    nodePort: 32189 # externer Port um auf Service zuzugreifen. Statischer Port (muss zwischen 30000-32767), aber bei weggelassen ist er dynamisch. Bei Anfrage auf Nodes über diesen Port, wird man an Service weitergleitet, vom Service, wird man dann weitergelitet an passende Nodes/Pods (target Port)
+    port: 8080 # interner Port für Cluster um auf Service zuzugreifen
     protocol: TCP
-    targetPort: 80
+    targetPort: 80 # Ist Port, welcher in Deployment auch als Container Port angegeben ist
   selector:
-    app: my-deployment
+    app: my-deployment # Wichtig!
   sessionAffinity: None
   type: NodePort
 status:
